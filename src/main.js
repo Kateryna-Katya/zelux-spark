@@ -1,21 +1,21 @@
 /**
- * ZYTRA CORE - Absolute Final Script v6
- * Исправлено: закрытие меню и мобильная адаптация
+ * ZELUX SPARK - Absolute Final Script v2026
+ * Fixed: menu closure and mobile adaptation
  */
 
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. ПЛАВНЫЙ СКРОЛЛ (Lenis)
+    // 1. SMOOTH SCROLL (Lenis)
     const lenis = new Lenis();
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // 2. ИНИЦИАЛИЗАЦИЯ ИКОНОК
+    // 2. ICON INITIALIZATION
     lucide.createIcons();
 
-    // 3. THREE.JS: ФОН В HERO
+    // 3. THREE.JS: HERO BACKGROUND
     const initHeroScene = () => {
         const container = document.querySelector('#hero-canvas');
         if (!container) return;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initHeroScene();
 
-    // 4. МОБИЛЬНОЕ МЕНЮ (Исправленная логика закрытия)
+    // 4. MOBILE MENU (Fixed closing logic)
     const burger = document.querySelector('.burger');
     const menu = document.querySelector('#menuOverlay');
     const mobileLinks = document.querySelectorAll('.nav-mobile__link');
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleMenu = () => {
         const isActive = menu.classList.toggle('is-active');
         burger?.classList.toggle('is-active');
-        
+
         if (isActive) {
             lenis.stop();
             document.body.style.overflow = 'hidden';
@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Открытие/закрытие по бургеру
+    // Open/Close via burger
     burger?.addEventListener('click', toggleMenu);
 
-    // ЗАКРЫТИЕ ПРИ КЛИКЕ НА ЛЮБУЮ ССЫЛКУ
+    // CLOSE ON LINK CLICK
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (menu.classList.contains('is-active')) {
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cookiePopup?.classList.remove('is-visible');
     });
 
-    // 6. АНИМАЦИИ ПОЯВЛЕНИЯ (Reveal)
+    // 6. REVEAL ANIMATIONS
     const revealItems = document.querySelectorAll('.js-reveal');
     revealItems.forEach(item => {
         gsap.from(item, {
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 7. СТЕКОВЫЕ КАРТОЧКИ (Innovations)
+    // 7. STACK CARDS (Innovations)
     const stacks = document.querySelectorAll('.stack-card');
     stacks.forEach((card, i) => {
         if(i < stacks.length - 1) {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 8. КОНТАКТНАЯ ФОРМА
+    // 8. CONTACT FORM
     const form = document.querySelector('#mainForm');
     const phoneInput = document.querySelector('#userPhone');
     const captchaLabel = document.querySelector('#captchaLabel');
@@ -142,22 +142,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let n1 = Math.floor(Math.random() * 5) + 1, n2 = Math.floor(Math.random() * 5) + 1;
     let sum = n1 + n2;
-    if(captchaLabel) captchaLabel.innerText = `Решите: ${n1} + ${n2} = ?`;
+    if(captchaLabel) captchaLabel.innerText = `Solve: ${n1} + ${n2} = ?`;
 
     form?.addEventListener('submit', (e) => {
         e.preventDefault();
         const ans = document.querySelector('#userCaptcha').value;
-        if(parseInt(ans) !== sum) { alert('Капча неверна!'); return; }
-        
+        if(parseInt(ans) !== sum) {
+            alert('Invalid captcha! Please try again.');
+            return;
+        }
+
         document.querySelector('#submitBtn').style.display = 'none';
         document.querySelector('#formSuccess').classList.add('is-visible');
         form.reset();
     });
 
-    // 9. ХЕДЕР ПРИ СКРОЛЛЕ
+    // 9. HEADER SCROLL EFFECT
     window.addEventListener('scroll', () => {
         document.querySelector('#header')?.classList.toggle('header--scrolled', window.scrollY > 50);
     });
 
-    console.log("Zytra Core v6: All fixed.");
+    console.log("Zelux Spark: Infrastructure initialized.");
 });
